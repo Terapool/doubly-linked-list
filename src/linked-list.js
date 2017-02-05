@@ -13,7 +13,12 @@ class LinkedList {
 			this._head = Node(data);
             this._tail = Node(data)
             }
-			
+		if (this.length > 0) 
+			{
+			this._tail.next = Node(data);
+            node.prev = this._tail;
+            this._tail = Node(data);
+            }	
 	}
 
     head() {}
