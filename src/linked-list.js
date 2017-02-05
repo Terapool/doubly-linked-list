@@ -37,33 +37,33 @@ class LinkedList {
 		}
 
     at(index) {
-		
+		var ee = this._tail;
         for (var i = this.length - 1; i > -1; i--)
 		           {
           if (i === index )
 		   {
-          return this._tail.data;
+          return ee.data;
 		  break;
             }
-           else {this._tail = this._tail.prev;}
+           else {ee = ee.prev;}
 		  		    }
 	}
     insertAt(index, data) {
 		
+		var x1 = this._tail;
 	    var x = new Node(data);
-        var x1 = this._tail;
-		
         for (var i = this.length - 1; i > -1; i--) 
 		{
           if (i === index - 1 )
-		   {  x.prev = x1;
-              x.next = x1.next;
-              
-              x1.next.prev = x;
-              x1.next = x;
+		   { x.next = x1.next;
+            x.prev = x1;
+            x1.next.prev = x;
+            x1.next = x;
             break;
           }
-            else {x1 = x1.prev;}
+            else {
+				x1 = x1.prev;
+				}
         }
         this.length =  this.length + 1;
           
