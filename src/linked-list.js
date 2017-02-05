@@ -3,30 +3,33 @@ const Node = require('./node');
 class LinkedList {
     constructor()
     {
-  this.lenght = 0;
-  this._head = null;
-  this._tail = null;
+    this.lenght = 0;
+    this._head = null;
+    this._tail = null;
     }
     append(data) 
 	{ 
+	var el = new Node(data);
   if (this.length == 0) 
       {
-      this._head = Node(data);
-      this._tail = Node(data);
+      this._head = el;
+      this._tail = el;
       }
   if (this.length > 0) 
 	  {
-      this._tail.next = Node(data);
-      Node(data).prev = this._tail;
-      this._tail = Node(data);
+      this._tail.next = el;
+      el.prev = this._tail;
+      this._tail = el;
       }	
+	    this.length = this.length + 1 ;
+        return this;
 	}
 
     head() {
 
-		var i = this._tail;
-		do {i = i.prev;} while (i.prev);
-        return i.data;
+		var el = this._tail;
+		do {el = el.prev;} while (el.prev);
+        return el.data;
 		}
 
     tail() {
@@ -37,32 +40,30 @@ class LinkedList {
 		
         for (var i = this.length - 1; i > -1; i--)
 		           {
-          if (i === index ) {
-        return this._tail.data;
-		 
+          if (i === index )
+		   {
+          return this._tail.data;
 		  break;
-                            }
-            else {this._tail = this._tail.prev;}
-          
-		  		}
+            }
+           else {this._tail = this._tail.prev;}
+		  		    }
 	}
     insertAt(index, data) {
-		
-		  var newNode = new Node(data);
-        var node = this._tail;
 		
 	    var x = new Node(data);
         var x1 = this._tail;
 		
-        for (var i = this.length - 1; i > -1; i--) {
-          if (i === index - 1 ) {
+        for (var i = this.length - 1; i > -1; i--) 
+		{
+          if (i === index - 1 )
+		   {  x.prev = x1;
               x.next = x1.next;
-              x.prev = x1;
+              
               x1.next.prev = x;
               x1.next = x;
             break;
           }
-            else {node = node.prev;}
+            else {x1 = x1.prev;}
         }
         this.length =  this.length + 1;
           
@@ -90,8 +91,8 @@ class LinkedList {
     deleteAt(index) 
 {
 	
-	 if ( index > -1 && index < this.length) {
-             var i = 0;
+	 if ( index > -1 && index < this.length) 
+	 {       var i = 0;
              var x = this._head;
             do {x = x.next;
                 i = i + 1;} 
@@ -104,10 +105,8 @@ class LinkedList {
 		    while (i != this.length - 1); 
 		   
 		   
-
+            x.next = null;
 		    x.data = null;
-			x.next = null;
-           
             this.length = this.length - 1;
            
 		    return this;
@@ -131,8 +130,7 @@ class LinkedList {
             if (i === this.length - 1) {
               this._tail = x1;
               x = x.prev;
-            }
-             else {
+            }   else {
                   this._tail.next = x1;
                   x1.prev = this._tail;
                   this._tail = x1;
@@ -147,8 +145,9 @@ class LinkedList {
 	{
 		
 		var x = this._tail;
+		
         while (x.prev) {
-            x = node.prev;
+            x = x.prev;
         }   
         var xx = 0;
         for (var i = 0; i < this.length; i++) {
