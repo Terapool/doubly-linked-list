@@ -7,13 +7,12 @@ class LinkedList {
   this._head = null;
   this._tail = null;
     }
-
     append(data) 
 	{ 
   if (this.length == 0) 
       {
       this._head = Node(data);
-      this._tail = Node(data)
+      this._tail = Node(data);
       }
   if (this.length > 0) 
 	  {
@@ -115,7 +114,6 @@ class LinkedList {
            } 
           }
 	
-	   }
 
     reverse() {
 		
