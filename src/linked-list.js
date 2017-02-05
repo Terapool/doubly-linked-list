@@ -1,169 +1,144 @@
 const Node = require('./node');
 
 class LinkedList {
-    constructor()
-    {
-    this.lenght = 0;
-    this._head = null;
-    this._tail = null;
-    }
-    append(data) 
-	{ 
-	var el = new Node(data);
-  if (this.length == 0) 
-      {
-      this._head = el;
-      this._tail = el;
-      }
-  if (this.length > 0) 
-	  {
-      this._tail.next = el;
-      el.prev = this._tail;
-      this._tail = el;
-      }	
-	    this.length = this.length + 1 ;
+    constructor() {this.length = 0}
+
+    append(data) {
+        var el = new Node(data);
+        
+            if (this.length == 0) 
+			{this._tail = el;
+            this._head = this._tail;}
+       
+	       if (this.length > 0) 
+		    {this._tail.next = el;
+            el.prev = this._tail;
+            this._tail = el;}
+			
+        this.length = this.length + 1;
         return this;
-	}
+                 }
 
     head() {
-
-		var el = this._tail;
-		do {el = el.prev;} while (el.prev);
+        var el = this._tail;	
+		while (el.prev) {el = el.prev;}   
         return el.data;
-		}
-
+    }
     tail() {
-		 return this._tail.data;
-		}
-
-    at(index) {
-		var ee = this._tail;
-        for (var i = this.length - 1; i > -1; i--)
-		           {
-          if (i === index )
-		   {
-          return ee.data;
-		  break;
-            }
-           else {ee = ee.prev;}
-		  		    }
+		var el = this._tail;	
+		return el.data;
 	}
-    insertAt(index, data) {
-		
-		var x1 = this._tail;
-	    var x = new Node(data);
-        for (var i = this.length - 1; i > -1; i--) 
-		{
-          if (i === index - 1 )
-		   { x.next = x1.next;
-            x.prev = x1;
-            x1.next.prev = x;
-            x1.next = x;
-            break;
-          }
-            else {
-				x1 = x1.prev;
-				}
+
+     at(index) 
+	 {
+        var el = this._tail;
+		var i = this.length - 1;
+		 for (i; i > -1; i--) 
+		     {if (i == index ) {return el.data;}
+                          else {el = el.prev;}
         }
-        this.length =  this.length + 1;
-          
-		  return this;
-		
-		}
-
-    isEmpty() {
-		if (this.length > 0) {return false;} 
-		if (this.length == 0) {return true;} 
-		}
-
-    clear() {
-	      this.length = 0;
-         this._tail.data = null;
-         this._tail.prev = null;
-         this._tail.next = null;
-		 this._head.prev = null;
-         this._head.data = null;
-         this._head.next = null;
-        
-		return this;
-		}
-
-    deleteAt(index) 
-{
-	
-	 if ( index > -1 && index < this.length) 
-	 {       var i = 0;
-             var x = this._head;
-            do {x = x.next;
-                i = i + 1;} 
-			while (i < index);
-           
-		   do { x.data = x.next.data;
-                this._tail = x;
-                x = x.next;
-                i = i + 1; } 
-		    while (i != this.length - 1); 
-		   
-		   
-            x.next = null;
-		    x.data = null;
-            this.length = this.length - 1;
-           
-		    return this;
-           } 
+     }	
+    insertAt(index, data) {
+        var el2 = new Node(data);
+        var el = this._tail;
+		var i = this.length - 1;
+        for (i; i > -1; i--) {
+          if (i == index - 1 ) {
+              el2.prev = el;
+		      el2.next = el.next;
+              el.next.prev = el2;
+              el.next =el2;
           }
-	
+            else {el = el.prev;}
+        }
+        this.length = this.length + 1;
+        return this;
+    }
 
-    reverse() {
-		
-	    var x = this._tail;
-		this._tail = null;
-    
-	     for (var i = this.length - 1; i > -1; i--) 
+    isEmpty() 
+	{
+        if (this.length == 0) {return true;} 
+		if (this.length != 0) {return false;} 
+    }
+
+    clear() 
+	{
+		this.length = 0;
+		this._tail.prev = null;
+		this._tail.data = null;
+        this._tail.next = null;
+        this._head.data = null;
+        this._head.prev = null;
+        this._head.next = null;
+        return this
+    }
+   deleteAt(index) 
+   {
+	   var x = this.length;
+         if (index < x) 
 		    {
-             var x1 = {
-              data: x.data,
+            var el = this._head;
+            var i = 0;
+           
+		   
+		   for (i; index - i > 0; i++) { el = el.next;};
+		    for (i; i != x - 1; i++)
+			 { 	el.data = el.next.data;
+                this._tail = el;
+                el = el.next;};
+            this.length = this.length - 1;
+            return this;
+        } 
+    }
+	
+	 reverse() {
+        var el2 = this._tail;
+        this._tail = null;
+		var i = this.length - 1
+        for (i; i > -1; i--)
+		 {
+            var el = {
               next: null,
               prev: null,
-             };
+			  data: el2.data,
+             
+            };
 
-            if (i === this.length - 1) {
-              this._tail = x1;
-              x = x.prev;
-            }   else {
-                  this._tail.next = x1;
-                  x1.prev = this._tail;
-                  this._tail = x1;
-                  x = x.prev;
+            if (i == this.length - 1) {
+               el2 = el2.prev;
+			  this._tail = el;
+             
+            }
+            if (i != this.length - 1)
+			{
+                this._tail.next = el;
+                el.prev = this._tail;
+                this._tail = el;
+                el2 = el2.prev;
            }
         }
         return this;
-		
-		}
-
-    indexOf(data) 
-	{
-		
-		var x = this._tail;
-		
-        while (x.prev) {
-            x = x.prev;
-        }   
-        var xx = 0;
-        for (var i = 0; i < this.length; i++) {
-          if (x.data === data ) {
-               return i;
-               xx = 1;
-               break;
+    }
+	
+    indexOf(data) {
+        var el = this._tail;
+        while (el.prev) { el = el.prev;}   
+        var metka = 0;
+		var i = 0;
+		var l = this.length;
+        for (i; i < l; i++) {
+          if (el.data == data ) {
+               metka = 100;
+			   return i;
+             }
+            else {el = el.next;}
           }
-            else {x = node.next;}
-        }
-        if (xx === 0) {
+        if (metka == 0) {
            return -1;
-        }    
-		
-		}
-};
+         }    
+     }
 
+ 
+}
 
 module.exports = LinkedList;
